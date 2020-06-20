@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+    <title>스타벅스 레디백 재고 확인</title>
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-content>
+          <v-container>
+            <div style="margin-bottom: 32px;">
+              <h2 style="color: #ffffff; padding: 16px;">
+                스타벅스 로그인 해주세요
+              </h2>
+              <v-btn @click="linkLogin" block color="#036635" height="56">
+                <span style="color: #ffffff; font-weight:bold; font-size: 24px;">로그인 하러가기</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-select
+                v-model="sidoCode"
+                :items="sidoList"
+                item-text="name"
+                item-value="code"
+                outlined
+              />
+            </div>
+            <div>
+              <v-select
+                v-model="gunguCode"
+                :items="gunguItems"
+                item-text="name"
+                item-value="code"
+                outlined
+              />
+            </div>
+            <div>
+              <v-btn @click="linkResult" block color="#036635" height="56">
+                <span style="color: #ffffff; font-weight:bold; font-size: 24px;">결과</span>
+              </v-btn>
+            </div>
+          </v-container>
+        </v-content>
+      </v-app>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        computed: {
+          gunguItems() {
+            return this.gunguList.filter(
+              (gugngu) => this.sidoCode === gugngu.sidoCode
+            );
+          },
+        },
+        data() {
+          return {
+            sidoCode: "01",
+            gunguCode: "01",
+            sidoList: [
+              { code: "01", name: "서울" },
+              { code: "02", name: "광주" },
+              { code: "03", name: "대구" },
+              { code: "04", name: "대전" },
+              { code: "05", name: "부산" },
+              { code: "06", name: "울산" },
+              { code: "07", name: "인천" },
+              { code: "08", name: "경기" },
+              { code: "09", name: "강원" },
+              { code: "10", name: "경남" },
+              { code: "11", name: "경북" },
+              { code: "12", name: "전남" },
+              { code: "13", name: "전북" },
+              { code: "14", name: "충남" },
+              { code: "15", name: "충북" },
+              { code: "16", name: "제주" },
+              { code: "17", name: "세종" },
+            ],
+            gunguList: [
+              { sidoCode: "01", code: "01", name: "강남구" },
+              { sidoCode: "01", code: "20", name: "강동구" },
+              { sidoCode: "01", code: "02", name: "강북구" },
+              { sidoCode: "01", code: "03", name: "강서구" },
+              { sidoCode: "01", code: "04", name: "관악구" },
+              { sidoCode: "01", code: "05", name: "광진구" },
+              { sidoCode: "01", code: "21", name: "구로구" },
+              { sidoCode: "01", code: "06", name: "금천구" },
+              { sidoCode: "01", code: "07", name: "노원구" },
+              { sidoCode: "01", code: "08", name: "도봉구" },
+              { sidoCode: "01", code: "22", name: "동대문구" },
+              { sidoCode: "01", code: "22", name: "동작구" },
+              { sidoCode: "01", code: "10", name: "마포구" },
+              { sidoCode: "01", code: "11", name: "서대문구" },
+              { sidoCode: "01", code: "12", name: "서초구" },
+              { sidoCode: "01", code: "23", name: "성동구" },
+              { sidoCode: "01", code: "13", name: "성북구" },
+              { sidoCode: "01", code: "14", name: "송파구" },
+              { sidoCode: "01", code: "15", name: "양천구" },
+              { sidoCode: "01", code: "16", name: "영등포구" },
+              { sidoCode: "01", code: "24", name: "용산구" },
+              { sidoCode: "01", code: "17", name: "은평구" },
+              { sidoCode: "01", code: "18", name: "종로구" },
+              { sidoCode: "01", code: "19", name: "중구" },
+              { sidoCode: "01", code: "25", name: "중랑구" },
+
+              { sidoCode: "02", code: "01", name: "광산구" },
+              { sidoCode: "02", code: "02", name: "남구" },
+              { sidoCode: "02", code: "03", name: "동구" },
+              { sidoCode: "02", code: "04", name: "북구" },
+              { sidoCode: "02", code: "05", name: "서구" },
+
+              { sidoCode: "03", code: "01", name: "남구" },
+              { sidoCode: "03", code: "02", name: "달서구" },
+              { sidoCode: "03", code: "08", name: "달성군" },
+              { sidoCode: "03", code: "03", name: "동구" },
+              { sidoCode: "03", code: "07", name: "북구" },
+              { sidoCode: "03", code: "04", name: "서구" },
+              { sidoCode: "03", code: "05", name: "수성구" },
+              { sidoCode: "03", code: "06", name: "중구" },
+
+              { sidoCode: "04", code: "01", name: "대덕구" },
+              { sidoCode: "04", code: "02", name: "동구" },
+              { sidoCode: "04", code: "03", name: "서구" },
+              { sidoCode: "04", code: "04", name: "유성구" },
+              { sidoCode: "04", code: "05", name: "중구" },
+
+              { sidoCode: "05", code: "13", name: "강서구" },
+              { sidoCode: "05", code: "01", name: "금정구" },
+              { sidoCode: "05", code: "11", name: "기장군" },
+              { sidoCode: "05", code: "02", name: "남구" },
+              { sidoCode: "05", code: "03", name: "동구" },
+              { sidoCode: "05", code: "14", name: "동래구" },
+              { sidoCode: "05", code: "04", name: "부산진구" },
+              { sidoCode: "05", code: "05", name: "북구" },
+              { sidoCode: "05", code: "06", name: "사상구" },
+              { sidoCode: "05", code: "07", name: "사하구" },
+              { sidoCode: "05", code: "15", name: "서구" },
+              { sidoCode: "05", code: "12", name: "수영구" },
+              { sidoCode: "05", code: "08", name: "연제구" },
+              { sidoCode: "05", code: "10", name: "중구" },
+              { sidoCode: "05", code: "16", name: "해운대구" },
+
+              { sidoCode: "06", code: "01", name: "남구" },
+              { sidoCode: "06", code: "05", name: "동구" },
+              { sidoCode: "06", code: "02", name: "북구" },
+              { sidoCode: "06", code: "03", name: "울주군" },
+              { sidoCode: "06", code: "04", name: "중구" },
+
+              { sidoCode: "06", code: "01", name: "남구" },
+              { sidoCode: "06", code: "05", name: "동구" },
+              { sidoCode: "06", code: "02", name: "북구" },
+              { sidoCode: "06", code: "03", name: "울주군" },
+              { sidoCode: "06", code: "04", name: "중구" },
+
+              { sidoCode: "08", code: "32", name: "고양시 덕양구" },
+              { sidoCode: "08", code: "02", name: "고양시 일산동구" },
+              { sidoCode: "08", code: "36", name: "고양시 일산서구" },
+              { sidoCode: "08", code: "03", name: "과천시" },
+              { sidoCode: "08", code: "04", name: "광명시" },
+              { sidoCode: "08", code: "05", name: "광주시" },
+              { sidoCode: "08", code: "06", name: "구리시" },
+              { sidoCode: "08", code: "07", name: "군포시" },
+              { sidoCode: "08", code: "37", name: "김포시" },
+              { sidoCode: "08", code: "08", name: "남양주시" },
+              { sidoCode: "08", code: "44", name: "동두천시" },
+              { sidoCode: "08", code: "38", name: "부천시" },
+              { sidoCode: "08", code: "11", name: "성남시 분당구" },
+              { sidoCode: "08", code: "33", name: "성남시 수정구" },
+              { sidoCode: "08", code: "12", name: "성남시 중원구" },
+              { sidoCode: "08", code: "13", name: "수원시 권서구" },
+              { sidoCode: "08", code: "39", name: "수원시 영통구" },
+              { sidoCode: "08", code: "14", name: "수원시 장안구" },
+              { sidoCode: "08", code: "15", name: "수원시 팔달구" },
+              { sidoCode: "08", code: "16", name: "시흥시" },
+              { sidoCode: "08", code: "17", name: "안산시 단원구" },
+              { sidoCode: "08", code: "40", name: "안성시 상록구" },
+              { sidoCode: "08", code: "18", name: "안성시" },
+              { sidoCode: "08", code: "19", name: "안성시 동안구" },
+              { sidoCode: "08", code: "20", name: "안양시 동안구" },
+              { sidoCode: "08", code: "21", name: "양주시" },
+              { sidoCode: "08", code: "41", name: "양평군" },
+              { sidoCode: "08", code: "34", name: "여주군" },
+              { sidoCode: "08", code: "23", name: "오산시" },
+              { sidoCode: "08", code: "24", name: "용인시 기흥구" },
+              { sidoCode: "08", code: "42", name: "용인시 수지구" },
+              { sidoCode: "08", code: "25", name: "용인시 처인구" },
+              { sidoCode: "08", code: "26", name: "의왕시" },
+              { sidoCode: "08", code: "27", name: "의정부시" },
+              { sidoCode: "08", code: "28", name: "이천시" },
+              { sidoCode: "08", code: "43", name: "파주시" },
+              { sidoCode: "08", code: "35", name: "평택시" },
+              { sidoCode: "08", code: "29", name: "포천시" },
+              { sidoCode: "08", code: "30", name: "하남시" },
+              { sidoCode: "08", code: "31", name: "화성시" },
+
+              { sidoCode: "09", code: "12", name: "강릉시" },
+              { sidoCode: "09", code: "14", name: "고성군" },
+              { sidoCode: "09", code: "01", name: "동해시" },
+              { sidoCode: "09", code: "03", name: "속초시" },
+              { sidoCode: "09", code: "16", name: "원주시" },
+              { sidoCode: "09", code: "08", name: "춘천시" },
+              { sidoCode: "09", code: "10", name: "홍천군" },
+
+              { sidoCode: "10", code: "거제시", name: "16" },
+              { sidoCode: "10", code: "김해시", name: "03" },
+              { sidoCode: "10", code: "밀양시", name: "04" },
+              { sidoCode: "10", code: "사천시", name: "05" },
+              { sidoCode: "10", code: "양산시", name: "18" },
+              { sidoCode: "10", code: "진주시", name: "08" },
+              { sidoCode: "10", code: "창원시", name: "10" },
+              { sidoCode: "10", code: "통영시", name: "11" },
+
+              { sidoCode: "11", code: "경산시", name: "01" },
+              { sidoCode: "11", code: "경주시", name: "02" },
+              { sidoCode: "11", code: "구미시", name: "05" },
+              { sidoCode: "11", code: "김천시", name: "22" },
+              { sidoCode: "11", code: "문경시", name: "19" },
+              { sidoCode: "11", code: "안동시", name: "23" },
+              { sidoCode: "11", code: "포항시 남구", name: "18" },
+              { sidoCode: "11", code: "포항시 북구", name: "26" },
+
+              { sidoCode: "12", code: "광양시", name: "04" },
+              { sidoCode: "12", code: "나주시", name: "19" },
+              { sidoCode: "12", code: "목포시", name: "06" },
+              { sidoCode: "12", code: "무안군", name: "07" },
+              { sidoCode: "12", code: "순천시", name: "08" },
+              { sidoCode: "12", code: "여수시", name: "10" },
+
+              { sidoCode: "13", code: "군산시", name: "12" },
+              { sidoCode: "13", code: "익산시", name: "06" },
+              { sidoCode: "13", code: "전주시 덕진구", name: "08" },
+              { sidoCode: "13", code: "전주시 완산구", name: "19" },
+              { sidoCode: "13", code: "정읍시", name: "10" },
+
+              { sidoCode: "14", code: "계룡시", name: "13" },
+              { sidoCode: "14", code: "공주시", name: "01" },
+              { sidoCode: "14", code: "논산시", name: "03" },
+              { sidoCode: "14", code: "당진시", name: "15" },
+              { sidoCode: "14", code: "보령시", name: "04" },
+              { sidoCode: "14", code: "서산시", name: "06" },
+              { sidoCode: "14", code: "아산시", name: "16" },
+              { sidoCode: "14", code: "천안시 동남구", name: "09" },
+              { sidoCode: "14", code: "천안시 서북구", name: "10" },
+
+              { sidoCode: "15", code: "제천시", name: "11" },
+              { sidoCode: "15", code: "증평군", name: "05" },
+              { sidoCode: "15", code: "청주시 상당구", name: "07" },
+              { sidoCode: "15", code: "청주시 서원구", name: "13" },
+              { sidoCode: "15", code: "청주시 청원구", name: "14" },
+              { sidoCode: "15", code: "청주시 홍덕구", name: "12" },
+              { sidoCode: "15", code: "충주시", name: "08" },
+
+              { sidoCode: "16", code: "서귀포시", name: "01" },
+              { sidoCode: "16", code: "제주시", name: "02" },
+
+              { sidoCode: "17", code: "세종", name: "01" },
+            ],
+          };
+        },
+        methods: {
+          linkLogin() {
+            window.open("https://www.starbucks.co.kr/login/login.do");
+          },
+          linkResult() {
+            // axios
+            //   .get(
+            //     `https://www.starbucks.co.kr/store/getStoreStockList.do?stock_data[[0][sku_no]=9400000000975&stock_data[[0][sku_nm]=bag_green&stock_data[[0][sku_kor_nm]=%EA%B7%B8%EB%A6%B0&stock_data[[1][sku_no]=9400000000976&stock_data[[1][sku_nm]=bag_pink&stock_data[[1][sku_kor_nm]=%ED%95%91%ED%81%AC&gugun_cd=${this.sidoCode}${this.gunguCode}`
+            //   )
+            //   .then(function (response) {
+            //     alert(response);
+            //   });
+            window.open(`
+https://www.starbucks.co.kr/store/getStoreStockList.do?stock_data[[0][sku_no]=9400000000975&stock_data[[0][sku_nm]=bag_green&stock_data[[0][sku_kor_nm]=%EA%B7%B8%EB%A6%B0&stock_data[[1][sku_no]=9400000000976&stock_data[[1][sku_nm]=bag_pink&stock_data[[1][sku_kor_nm]=%ED%95%91%ED%81%AC&gugun_cd=${this.sidoCode}${this.gunguCode}
+`);
+          },
+        },
+      });
+    </script>
+    <style>
+      html,
+      body,
+      #app {
+        background-color: #2c2a29;
+      }
+      .v-text-field--outlined > .v-input__control > .v-input__slot {
+        background-color: #ffffff;
+      }
+    </style>
+  </body>
+</html>
