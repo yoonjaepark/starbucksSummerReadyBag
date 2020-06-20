@@ -65,14 +65,15 @@
               <div>- BIG_PNK_COUNT는 핑크 레디백 수량</div>
               <div>- STORE_CD는 매장 고유번호</div>
             </div>
-            <!-- <div style="margin-top: 30px; color: #ffffff">결과 입력</div>
-            <v-textarea v-model="rawData" @input="resultData" style="background-color: #ffffff">
+            <div style="margin-top: 30px; color: #ffffff">결과 입력</div>
             <div v-if="result.length > 0">
-              <div v-for="(item, index) in resultList" :key="index">
-                {{ item.BAG_GREEN_COUNT }}
-                dsds
+              <div v-for="(item, index) in result" :key="index" style="color: #ffffff; display: flex; padding: 8px;">
+                <div style="width: 50px;">그린:{{ item.BAG_GREEN_COUNT }}</div>
+                <div style="width: 50px;">핑크:{{ item.BAG_PINK_COUNT }}</div>
+                <div>매장명:{{ item.nm }}점</div>
               </div>
-            </div> -->
+            </div>
+            <v-textarea v-model="rawData" @input="resultData" style="background-color: #ffffff" />
           </v-container>
         </v-content>
       </v-app>
@@ -84,18 +85,21 @@
       new Vue({
         el: "#app",
         vuetify: new Vuetify(),
+        watch: {
+          result: function (val) {
+            return this.result
+          }
+        },
         computed: {
           gunguItems() {
             return this.gunguList.filter(
               (gugngu) => this.sidoCode === gugngu.sidoCode
             );
-          },
-          resultList() {
-            return this.result || []
           }
         },
         data() {
           return {
+            resultList: [],
             rawData: '',
             sidoCode: "01",
             gunguCode: "01",
@@ -320,12 +324,12 @@ https://www.starbucks.co.kr/store/getStoreStockList.do?stock_data[[0][sku_no]=94
             console.log('test')
             if (this.rawData) {
               const parseResult = JSON.parse(this.rawData)
-               this.result = parseResult.stockList.map((stock) => {
+              const result = parseResult.stockList.map((stock) => {
                 currentStore = parseResult.storeList.find((store) => store.store_cd + '' == stock.STORE_CD + '')
-                console.log(currentStore)
                 stock.nm = currentStore.store_nm
                 return stock
               })
+              this.result = result
               console.log( this.result)
             }
           }
